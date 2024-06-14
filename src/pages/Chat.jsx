@@ -1,5 +1,13 @@
-import { Box, Button, Center, Container, Flex } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Input,
+  Select,
+  Text,
+} from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import SignOutUser from '../components/SignOutUser';
 import { auth, db } from '../firebase/firebaseConfig';
 import {
@@ -17,11 +25,29 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const [room, setRoom] = useState('');
   const messagesRef = collection(db, 'messages');
+  useEffect(() => {
+    const queryMessages = query(
+      messagesRef,
+      where('room', '==', room),
+      orderBy('createdAt')
+    );
+    const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
+      let messages = [];
+      snapshot.forEach((doc) => {
+        messages.push({ ...doc.data(), id: doc.id });
+      });
+      console.log(messages);
+      setMessages(messages);
+    });
+
+    return () => unsuscribe();
+  }, []);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
     const data = {
       message,
+      uid: auth.currentUser.uid,
       createdAt: serverTimestamp(),
       user: auth.currentUser.displayName,
       room,
@@ -32,7 +58,11 @@ function Chat() {
     setMessage('');
   };
   return (
-    <Container height={'100vh'}>
+    <Container
+      height={'100vh'}
+      w="100%"
+      bgGradient="linear(to-r, green.200, pink.500)"
+    >
       <Box
         background="darkblue"
         display={'flex'}
@@ -43,8 +73,18 @@ function Chat() {
           <SignOutUser />
         </Button>
       </Box>
-      <Box textAlign={'center'}>Welcome To Chat</Box>
-      <Box background="yellowgreen">content</Box>
+      <Center bg="tomato" h="100px" color="white">
+        Welcome To Chat
+      </Center>
+      <Box background="yellowgreen">
+        {messages.map((newMessage, i) => {
+          return (
+            <Text key={i}>
+              {newMessage.user} : {newMessage.message}
+            </Text>
+          );
+        })}
+      </Box>
       <Box background="darkblue" marginTop={'6em'}>
         <form
           style={{
@@ -54,19 +94,22 @@ function Chat() {
           }}
           onSubmit={handleSendMessage}
         >
-          <input
+          <Input
             value={message}
             type="text"
             placeholder="Send Message"
             onChange={(e) => setMessage(e.target.value)}
           />
-          <select onChange={(e) => setRoom(e.target.value)}>
+          <Select
+            onChange={(e) => setRoom(e.target.value)}
+            placeholder="Select option"
+          >
             <option value="JavaScript">JavaScript</option>
             <option value="TypeScript">TypeScript</option>
             <option value="React">React</option>
             <option value="ReactNative">ReactNative</option>
-          </select>
-          <Button type="submit" m={'6px'}>
+          </Select>
+          <Button type="submit" m={'6px'} colorScheme="blue">
             Send
           </Button>
         </form>
