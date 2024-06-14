@@ -16,3 +16,9 @@ npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
 ```
 
 4. create components.
+
+5. install react-router-dom
+
+```js
+npm i react-router-dom
+```

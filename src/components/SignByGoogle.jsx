@@ -22,7 +22,9 @@ const SignByGoogle = () => {
   };
   return (
     <div>
-      <Button onClick={signIn}>Sign By Google</Button>
+      <Button background="blue" onClick={signIn}>
+        <i className="fa-brands fa-google"></i> Sign By Google
+      </Button>
     </div>
   );
 };
