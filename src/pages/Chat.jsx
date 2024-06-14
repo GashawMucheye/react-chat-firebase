@@ -47,6 +47,7 @@ function Chat() {
     e.preventDefault();
     const data = {
       message,
+      date: new Date().toLocaleTimeString(),
       uid: auth.currentUser.uid,
       createdAt: serverTimestamp(),
       user: auth.currentUser.displayName,
@@ -80,7 +81,7 @@ function Chat() {
         {messages.map((newMessage, i) => {
           return (
             <Text key={i}>
-              {newMessage.user} : {newMessage.message}
+              {newMessage.user} : {newMessage.message}:{newMessage.date}
             </Text>
           );
         })}
