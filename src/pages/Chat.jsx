@@ -4,8 +4,10 @@ import {
   Center,
   Container,
   Input,
-  Select,
+  // Select,
   Text,
+  Flex,
+  Image,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import SignOutUser from '../components/SignOutUser';
@@ -13,24 +15,20 @@ import { auth, db } from '../firebase/firebaseConfig';
 import {
   addDoc,
   collection,
-  where,
   serverTimestamp,
   onSnapshot,
   query,
   orderBy,
 } from 'firebase/firestore';
+// import RoomScreen from '../components/RoomScreen';
 
 function Chat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [room, setRoom] = useState('');
+  // const [room, setRoom] = useState('');
   const messagesRef = collection(db, 'messages');
   useEffect(() => {
-    const queryMessages = query(
-      messagesRef,
-      where('room', '==', room),
-      orderBy('createdAt')
-    );
+    const queryMessages = query(messagesRef, orderBy('createdAt'));
     const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
       let messages = [];
       snapshot.forEach((doc) => {
@@ -47,11 +45,11 @@ function Chat() {
     e.preventDefault();
     const data = {
       message,
+      photUrl: auth.currentUser.photoURL,
       date: new Date().toLocaleTimeString(),
       uid: auth.currentUser.uid,
       createdAt: serverTimestamp(),
       user: auth.currentUser.displayName,
-      room,
     };
     if (message === '') return;
     await addDoc(messagesRef, data);
@@ -60,59 +58,83 @@ function Chat() {
   };
   return (
     <Container
-      height={'100vh'}
-      w="100%"
+      // minHeight={'600px'}
+      maxW="100%"
+      p="1em"
       bgGradient="linear(to-r, green.200, pink.500)"
     >
       <Box
-        background="darkblue"
+        p="12px"
         display={'flex'}
         justifyContent={'space-between'}
+        alignItems={'center'}
       >
         <h1>Chat App</h1>
         <Button>
           <SignOutUser />
         </Button>
       </Box>
-      <Center bg="tomato" h="100px" color="white">
-        Welcome To Chat
+      <Center color="white">
+        <span style={{ margin: '4px' }}>
+          <Image
+            src={auth.currentUser.photoURL}
+            alt="profile_img"
+            width={50}
+            borderRadius={'50px'}
+          />
+        </span>
+        <span> Welcome {auth.currentUser.displayName}</span>
       </Center>
-      <Box background="yellowgreen">
+      <Box>
         {messages.map((newMessage, i) => {
           return (
-            <Text key={i}>
-              {newMessage.user} : {newMessage.message}:{newMessage.date}
-            </Text>
+            <Box key={i} mt={7}>
+              <section
+                style={
+                  auth.currentUser.uid === newMessage.uid
+                    ? {
+                        marginRight: '60%',
+                        background: 'greenyellow',
+                        Width: '20%',
+                        minHeight: '10%',
+                        padding: '10px',
+                        borderRadius: '10px 0 10px 0',
+                      }
+                    : {
+                        marginLeft: '60%',
+                        background: 'gray',
+                        padding: '10px',
+                        Width: '20%',
+                        minHeight: '10%',
+                        borderRadius: '10px 0 10px 0',
+                      }
+                }
+              >
+                <Text>{newMessage.date}</Text>
+                <Text>
+                  {newMessage.user} : {newMessage.message}
+                </Text>
+              </section>
+            </Box>
           );
         })}
       </Box>
-      <Box background="darkblue" marginTop={'6em'}>
-        <form
-          style={{
-            background: 'purple',
-            padding: '1em',
-            textAlign: 'center',
-          }}
-          onSubmit={handleSendMessage}
-        >
-          <Input
-            value={message}
-            type="text"
-            placeholder="Send Message"
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <Select
-            onChange={(e) => setRoom(e.target.value)}
-            placeholder="Select option"
-          >
-            <option value="JavaScript">JavaScript</option>
-            <option value="TypeScript">TypeScript</option>
-            <option value="React">React</option>
-            <option value="ReactNative">ReactNative</option>
-          </Select>
-          <Button type="submit" m={'6px'} colorScheme="blue">
-            Send
-          </Button>
+      <Box>
+        <form onSubmit={handleSendMessage} display="flex">
+          <Flex alignItems={'center'}>
+            <Input
+              value={message}
+              type="text"
+              placeholder="Send Message"
+              onChange={(e) => setMessage(e.target.value)}
+            />
+
+            <Button type="submit" m={'6px'} colorScheme="blue">
+              Send
+            </Button>
+          </Flex>
+
+          {/* <RoomScreen /> */}
         </form>
       </Box>
     </Container>

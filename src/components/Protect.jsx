@@ -21,7 +21,7 @@ const Protect = ({ children }) => {
   );
 
   return (
-    <Container background={'red'} display={'grid'} placeItems={'center'}>
+    <Container marginBlock={'3em'} p={'1em'} maxW={'800px'}>
       {loggedIn ? <Chat /> : children}
     </Container>
   );
