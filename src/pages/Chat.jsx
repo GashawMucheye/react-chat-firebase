@@ -68,7 +68,7 @@ function Chat() {
         justifyContent={'space-between'}
         alignItems={'center'}
       >
-        <h1>Chat App</h1>
+        <strong>Chat App</strong>
         <Button>
           <SignOutUser />
         </Button>
