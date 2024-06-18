@@ -1,4 +1,4 @@
-import { Center, Flex, Text } from '@chakra-ui/react';
+import { Center, Flex } from '@chakra-ui/react';
 import SignByGoogle from '../components/SignByGoogle';
 
 const Home = () => {

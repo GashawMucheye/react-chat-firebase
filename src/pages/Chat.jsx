@@ -18,14 +18,13 @@ import {
   serverTimestamp,
   onSnapshot,
   query,
+  where,
   orderBy,
 } from 'firebase/firestore';
-// import RoomScreen from '../components/RoomScreen';
 
 function Chat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  // const [room, setRoom] = useState('');
   const messagesRef = collection(db, 'messages');
   useEffect(() => {
     const queryMessages = query(messagesRef, orderBy('createdAt'));
@@ -133,8 +132,6 @@ function Chat() {
               Send
             </Button>
           </Flex>
-
-          {/* <RoomScreen /> */}
         </form>
       </Box>
     </Container>

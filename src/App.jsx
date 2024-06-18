@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Protect from './components/Protect';
+import Chat from './pages/Chat';
 function App() {
   return (
     <div
@@ -21,6 +22,7 @@ function App() {
             </Protect>
           }
         />
+        <Route path="/Chat" element={<Chat />} />
       </Routes>
     </div>
   );

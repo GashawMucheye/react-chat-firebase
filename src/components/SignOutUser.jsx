@@ -20,7 +20,7 @@ const SignOutUser = () => {
         title: 'Account sign out',
         description: error.message,
         status: 'error',
-        duration: 9000,
+        duration: 4000,
         isClosable: true,
       });
     }
