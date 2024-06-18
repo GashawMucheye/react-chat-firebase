@@ -1,7 +1,6 @@
 import { Box, Button, useToast } from '@chakra-ui/react';
 import { auth } from '../firebase/firebaseConfig';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 
 const SignByGoogle = () => {
   const googleProvider = new GoogleAuthProvider();
