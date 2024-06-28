@@ -23,4 +23,4 @@ npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
 npm i react-router-dom
 ```
 
-![text]('../../public/chat-img.png')
+![text](src/assets/chat-img.png)
