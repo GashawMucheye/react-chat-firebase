@@ -1,5 +1,5 @@
 import { Center, Flex } from '@chakra-ui/react';
-import SignByGoogle from '../components/SignByGoogle';
+import SignScreen from './SignScreen';
 
 const Home = () => {
   return (
@@ -12,8 +12,7 @@ const Home = () => {
       >
         Gashaw's Chat
       </Center>
-
-      <SignByGoogle />
+      <SignScreen />
     </Flex>
   );
 };

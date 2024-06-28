@@ -39,7 +39,6 @@ function Chat() {
 
     return () => unsuscribe();
   }, []);
-
   const handleSendMessage = async (e) => {
     e.preventDefault();
     const data = {
@@ -53,7 +52,6 @@ function Chat() {
     if (message === '') return;
     await addDoc(messagesRef, data);
     console.log('message sent');
-    setMessage('');
   };
   return (
     <Container
