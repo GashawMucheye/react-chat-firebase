@@ -52,6 +52,7 @@ function Chat() {
     if (message === '') return;
     await addDoc(messagesRef, data);
     console.log('message sent');
+    setMessage('');
   };
   return (
     <Container

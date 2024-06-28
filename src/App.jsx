@@ -21,18 +21,7 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      <Box
-        // style={{
-        //   minHeight: '100vh',
-        //   display: 'grid',
-        //   placeItems: 'center',
-        //   background: '#f5f5f5',
-        // }}
-        display="flex"
-        flexDirection="column"
-        h="100vh"
-        bg={'red'}
-      >
+      <Box display="flex" flexDirection="column" h="100vh" bg={'red'}>
         <Navbar isLoggedIn={isLoggedIn} />
         <Box flex={1} bg={'yellowgreen'}>
           <Routes>

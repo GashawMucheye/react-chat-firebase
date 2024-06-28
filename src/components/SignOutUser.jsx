@@ -1,4 +1,4 @@
-import { Button, useToast } from '@chakra-ui/react';
+import { Box, Button, useToast } from '@chakra-ui/react';
 import { auth } from '../firebase/firebaseConfig';
 import { signOut } from 'firebase/auth';
 const SignOutUser = () => {
@@ -26,9 +26,9 @@ const SignOutUser = () => {
     }
   };
   return (
-    <div>
+    <Box>
       <Button onClick={handleSignOut}>Sign Out</Button>
-    </div>
+    </Box>
   );
 };
 

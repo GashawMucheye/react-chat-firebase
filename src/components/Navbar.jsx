@@ -1,4 +1,4 @@
-import { Box, List } from '@chakra-ui/react';
+import { Box, Heading, List, background } from '@chakra-ui/react';
 import React from 'react';
 import SignOutUser from './SignOutUser';
 import { Link } from 'react-router-dom';

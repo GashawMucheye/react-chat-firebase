@@ -3,3 +3,15 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+ul li a {
+  font-style: italic;
+}
+
+ul li a:hover {
+  border-bottom: 2px solid white;
+}
+
+div h2 {
+  font-size: medium !important;
+}

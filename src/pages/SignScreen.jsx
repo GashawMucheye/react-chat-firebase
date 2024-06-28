@@ -2,9 +2,7 @@ import { Box, Button, Center, useToast } from '@chakra-ui/react';
 import { auth } from '../firebase/firebaseConfig';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
 const SignScreen = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
@@ -13,8 +11,6 @@ const SignScreen = () => {
     e.preventDefault();
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      cookies.set('auth-token', result.user.refreshToken);
-      // setIsAuth(true);
       console.log(result);
       toast({
         title: 'Account created.',
